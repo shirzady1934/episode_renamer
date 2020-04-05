@@ -1,15 +1,13 @@
-def resync(name, encoding=''):
+def resync(name, second=15, encoding='utf-8'):
 	if name.split('.')[-1] == 'srt': 
 		import pysrt
-		encoding = 'windows-1256' if encoding is '' else encoding
 		sub = pysrt.open(name, encoding=encoding)
-		sub.shift(seconds=15.5)
+		sub.shift(seconds=second)
 		sub.save()
 	if name.split('.')[-1] == 'ass':
 		import pysubs2
-		encoding = "utf-8" if encoding == '' else encoding
 		sub = pysubs2.load(name, encoding=encoding)
-		sub.shift(s=15.5)
+		sub.shift(s=second)
 		sub.save(name)
 
 def rename(vid, sub):
