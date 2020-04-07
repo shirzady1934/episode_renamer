@@ -11,6 +11,9 @@ def resync(name, second=15, encoding='utf-8'):
 		sub.save(name)
 
 def rename(vid, sub):
+	if len(vid) != len(sub):
+		print("Error file length!")
+		return False
 	import os
 	for i in range(len(sub)):
 		os.renames(sub[i], vid[i][:-3] + sub[i][-3:])
