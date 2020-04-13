@@ -3,6 +3,7 @@ import re
 import pysubs2
 import requests
 import pysrt
+import asstosrt
 from bs4 import BeautifulSoup
 
 def resync(name, second=15, encoding='utf-8'):
