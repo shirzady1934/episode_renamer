@@ -35,7 +35,7 @@ def getvid():
 	vid = sorted_alphanumeric([file for file in os.listdir() if 'mkv' in file])
 	return vid
 def getsub():
-	sub = sorted_alphanumeric([file for file in os.listdir() if 'srt' in file])
+	sub = sorted_alphanumeric([file for file in os.listdir() if 'srt' in file or 'ass' in file])
 	return sub
 def sorted_alphanumeric(data):
 	convert = lambda text: int(text) if text.isdigit() else text.lower()
@@ -56,3 +56,13 @@ def auto_name(vid, name, start, season, url):
 	vid = getvid()
 	sub = imdb_get(url)
 	add_name(vid, sub)
+
+def tosrt(sub):
+	for file in sub:
+		with open(file, 'r') as f:
+			srtfile = asstosrt.conver(f)
+		new_name = '.'.joien(file.split('.')[:-1])
+		with open(new_name, 'w') as f:
+			f.write(srtfile)
+		os.remove(file)
+
