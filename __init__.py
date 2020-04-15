@@ -4,6 +4,7 @@ import pysubs2
 import requests
 import pysrt
 import asstosrt
+import subprocess
 from bs4 import BeautifulSoup
 
 def resync(name, second=15, encoding='utf-8'):
@@ -61,9 +62,18 @@ def auto_name(vid, name, start, season, url):
 def tosrt(sub):
 	for file in sub:
 		with open(file, 'r') as f:
-			srtfile = asstosrt.conver(f)
-		new_name = '.'.joien(file.split('.')[:-1])
+			srtfile = asstosrt.convert(f)
+		new_name = '.'.join(file.split('.')[:-1]) + '.srt'
 		with open(new_name, 'w') as f:
 			f.write(srtfile)
 		os.remove(file)
 
+def appendsrt(vid, sub):
+	if len(vid) != len(sub):
+		return False
+	for counter in range(len(vid)):
+		cmd_list = ['mkvmerge', '-o', 'tempfile.mkv', vid[counter], '--language', '0:english', '--track-name', '0:English', '-s', '0', '-D', '-A', sub[counter]]
+		subprocess.call(cmd_list)
+		os.remove(vid[counter])
+		os.renames('tempfile.mkv', vid[counter])
+	print("Done!")
