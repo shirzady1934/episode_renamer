@@ -53,7 +53,8 @@ def imdb_get(url):
 	sub = [title['title'] for title in soup.find_all('a', attrs={'itemprop' :"name"})]
 	return sub
 
-def auto_name(vid, name, start, season, url):
+def auto_name(vid, name, start, season, id):
+	url = "https://www.imdb.com/title/%s/episodes?season=%d" % (id, season)
 	series(vid, name, start, season)
 	vid = getvid()
 	sub = imdb_get(url)
